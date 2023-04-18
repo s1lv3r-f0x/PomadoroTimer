@@ -1,0 +1,66 @@
+﻿@page "/timer"
+
+<PageTitle>Timer</PageTitle>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <h2 class="text-center">Done</h2>
+
+      <table class="table table-striped">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Note</th>
+            <th scope="col">TimeSpan</th>
+          </tr>
+        </thead>
+
+        @foreach (var done in doneList)
+        {
+          <tbody>
+            <tr>
+              <td>
+                @done.Key
+              </td>
+              <td>
+                @done.Value
+              </td>
+            </tr>
+          </tbody>
+        }
+      </table>
+    </div>
+  </div>
+</div>
+
+<input @bind=@note type="text" minlenght="1" maxlength="250" size="50" />
+<button class="btn btn-success" @onclick="StartTimer">Start</button>
+<button class="btn btn-danger" @onclick="StopTimer">Stop</button>
+
+@code {
+  private static string note;
+
+  private DateTime start;
+
+  private DateTime end;
+
+  private TimeSpan timeSpan;
+
+  private Dictionary<string, string> doneList = new Dictionary<string, string>();
+
+  public void StartTimer()
+  {
+    if (string.IsNullOrWhiteSpace(note))
+      return;
+
+    start = DateTime.Now.ToLocalTime();
+  }
+
+  public void StopTimer()
+  {
+    end = DateTime.Now.ToLocalTime();
+    timeSpan = end - start;
+    doneList.Add(note, timeSpan.ToString(@"hh\:mm\:ss"));
+    note = string.Empty;
+  }
+}
