@@ -1,0 +1,45 @@
+﻿@page "/TodoList"
+
+<PageTitle>TodoList</PageTitle>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <h2 class="text-center">Done</h2>
+
+      <table class="table table-striped">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Note</th>
+            <th scope="col">TimeSpan</th>
+          </tr>
+        </thead>
+
+        @foreach (var done in todoList)
+        {
+          <tbody>
+            <tr>
+              <td>
+                @done.Title
+              </td>
+              <td>
+                @done.Duration
+              </td>
+            </tr>
+          </tbody>
+        }
+      </table>
+    </div>
+  </div>
+</div>
+
+<input @bind=@note type="text" minlenght="1" maxlength="250" size="50" />
+<button class="btn btn-success">Start</button>
+<button class="btn btn-warning">Pause</button>
+<button class="btn btn-danger">Stop</button>
+
+@code {
+  private string note;
+
+  private List<Todo> todoList = new List<Todo>();
+}
